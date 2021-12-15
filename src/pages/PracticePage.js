@@ -83,7 +83,7 @@ const EditPage = () => {
         style={{ height: "100vh", width: "100vw" }}
         crs={CRS.Simple}
       >
-        <ImageOverlay bounds={bounds} url="./map.jpg"></ImageOverlay>
+        <ImageOverlay bounds={bounds} url="./mapempty.jpg"></ImageOverlay>
         {displayPins}
       </MapContainer>
     </>
