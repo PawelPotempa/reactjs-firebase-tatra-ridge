@@ -1,5 +1,11 @@
-import React, { useState } from "react";
-import { MapContainer, ImageOverlay, useMapEvents, Popup } from "react-leaflet";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  MapContainer,
+  ImageOverlay,
+  useMapEvents,
+  Popup,
+  useMap,
+} from "react-leaflet";
 import { CRS } from "leaflet";
 import "../App.css";
 import { createPost, deletePost } from "../lib/firebase";
@@ -8,6 +14,8 @@ import Navbar from "../components/Navbar";
 
 const EditPage = () => {
   const { doc } = useDataFetch();
+  const placeholderPin = useRef();
+  const shapePreview = useRef();
 
   const [formValues, setFormValues] = useState({
     latitude: "",
@@ -31,16 +39,34 @@ const EditPage = () => {
     [488.2, 1299.3],
   ];
 
+  const faraway = [
+    [6, 17],
+    [9, 20],
+  ];
+
   const Pins = () => {
     const map = useMapEvents({
       click(e) {
+        let lat = e.latlng.lat;
+        let lng = e.latlng.lng;
         setFormValues({
           ...formValues,
-          latitude: e.latlng.lat,
-          longitude: e.latlng.lng,
+          latitude: lat,
+          longitude: lng,
         });
+        placeholderPin.current._bounds._northEast = {
+          lat: lat + 1.4,
+          lng: lng + 1.4,
+        };
+        placeholderPin.current._bounds._southWest = {
+          lat: lat - 1.4,
+          lng: lng - 1.4,
+        };
+        let data = { lat, lng };
+        map.flyTo(data, 4);
       },
     });
+
     return null;
   };
 
@@ -57,6 +83,7 @@ const EditPage = () => {
       ...formValues,
       shape: res[3],
     });
+    placeholderPin.current._image.src = `./${res[3]}`;
   };
   // Function responsible for handling the form submition.
   const submitHandler = (e) => {
@@ -189,6 +216,7 @@ const EditPage = () => {
             ></input>
           )}
           <img
+            ref={shapePreview}
             className="pinShapePreview"
             src={
               formValues.shape.length > 0
@@ -233,6 +261,11 @@ const EditPage = () => {
         crs={CRS.Simple}
       >
         <ImageOverlay bounds={bounds} url="./map.jpg"></ImageOverlay>
+        <ImageOverlay
+          ref={placeholderPin}
+          bounds={faraway}
+          url="./circle.svg"
+        ></ImageOverlay>
         <Pins />
         {displayPins}
       </MapContainer>

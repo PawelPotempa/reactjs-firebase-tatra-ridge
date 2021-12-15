@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import EditPage from "./pages/EditPage";
 import LearnPage from "./pages/LearnPage";
 import PracticePage from "./pages/PracticePage";
+import RandomPractice from "./pages/RandomPractice";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route exact path="/" element={<LearnPage />} />
         <Route exact path="/edit" element={<EditPage />} />
         <Route exact path="/practice" element={<PracticePage />} />
+        <Route exact path="/random-practice" element={<RandomPractice />} />
       </Routes>
     </>
   );
