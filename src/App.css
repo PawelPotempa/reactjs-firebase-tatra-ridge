@@ -13,10 +13,12 @@
   box-shadow: 5px 8px 16px -7px rgba(66, 68, 90, 1);
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  height: 40vh;
+  /* height: 50vh; */
+  height: auto;
   width: 10vw;
   top: 50%;
-  margin-top: -20vh;
+  margin-top: -25vh;
+  padding: 0.7em 0.7em 0.7em 0;
   z-index: 999;
 }
 
@@ -26,7 +28,8 @@ form {
   align-items: center;
   flex-direction: column;
 }
-.pinInput {
+.pinInput,
+textarea {
   width: 90%;
   height: 15px;
   border-radius: 5px;
@@ -35,11 +38,13 @@ form {
   z-index: 9999;
 }
 
-.pinInput:nth-of-type(7) {
-  height: 10vh;
-}
-.pinInput:nth-of-type(9) {
+.pinInput:nth-of-type(8) {
   margin-bottom: 5px;
+}
+
+textarea {
+  height: auto;
+  resize: none;
 }
 
 .hidden {
@@ -49,28 +54,37 @@ form {
 .shapeText {
   margin: 10px 0 0 0px;
   color: #fff;
+  text-align: center;
 }
 
 .shapesContainer {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(65, 65, 65);
   margin-top: 20px;
-  height: 10%;
+  height: 40px;
+  width: auto;
   z-index: 999;
 }
 
 .pinShape {
   height: 100%;
+  filter: invert(59%) sepia(69%) saturate(1644%) hue-rotate(2deg)
+    brightness(107%) contrast(103%);
+}
+
+.shapePreviewContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .pinShapePreview {
   width: 20%;
-  position: absolute;
-  bottom: 5px;
-  filter: invert(33%) sepia(63%) saturate(3179%) hue-rotate(259deg)
-    brightness(88%) contrast(108%);
+  padding-bottom: 1em;
+  filter: invert(73%) sepia(81%) saturate(407%) hue-rotate(133deg)
+    brightness(191%) contrast(97%);
 }
 
 .tooltip {
@@ -112,7 +126,8 @@ form {
 } */
 
 .img-overlay {
-  filter: brightness(0) saturate(100%);
+  filter: invert(59%) sepia(69%) saturate(1644%) hue-rotate(2deg)
+    brightness(107%) contrast(103%);
 }
 
 .img-overlay-wrong {
@@ -127,4 +142,9 @@ form {
 
 .leaflet-control-zoom {
   top: 50px;
+}
+
+.placeholderPin {
+  filter: invert(73%) sepia(81%) saturate(407%) hue-rotate(133deg)
+    brightness(91%) contrast(97%);
 }

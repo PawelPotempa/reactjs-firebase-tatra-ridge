@@ -44,7 +44,7 @@ export async function createPost(values) {
     shape: values.shape,
     name: values.name,
     altname: values.altname,
-    height: values.height,
+    altitude: values.altitude,
     keystoneone: values.keystoneone,
     keystonetwo: values.keystonetwo,
     notes: values.notes,

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { MapContainer, ImageOverlay, useMapEvents, Popup } from "react-leaflet";
+import { MapContainer, ImageOverlay, Popup } from "react-leaflet";
 import { CRS } from "leaflet";
 import "../App.css";
-import { createPost, deletePost } from "../lib/firebase";
+import { deletePost } from "../lib/firebase";
 import useDataFetch from "../hooks/useDataFetch";
 import Navbar from "../components/Navbar";
 
@@ -10,18 +10,6 @@ const EditPage = () => {
   const { doc } = useDataFetch();
 
   const [answer, setAnswer] = useState(false);
-  const [keystone, setKeystone] = useState(false);
-  const [formValues, setFormValues] = useState({
-    latitude: "",
-    longitude: "",
-    shape: "",
-    name: "",
-    altname: "",
-    height: "",
-    keystoneone: "",
-    keystonetwo: "",
-    notes: "",
-  });
 
   if (!doc) {
     return null;
@@ -32,19 +20,6 @@ const EditPage = () => {
     [0, 0],
     [488.2, 1299.3],
   ];
-
-  const Pins = () => {
-    const map = useMapEvents({
-      click(e) {
-        setFormValues({
-          ...formValues,
-          latitude: e.latlng.lat,
-          longitude: e.latlng.lng,
-        });
-      },
-    });
-    return null;
-  };
 
   const valueCompare = (e) => {
     const data = e.target.dataset.tag;
@@ -109,7 +84,6 @@ const EditPage = () => {
         crs={CRS.Simple}
       >
         <ImageOverlay bounds={bounds} url="./map.jpg"></ImageOverlay>
-        <Pins />
         {displayPins}
       </MapContainer>
     </>

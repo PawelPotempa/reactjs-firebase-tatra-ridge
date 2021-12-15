@@ -1,11 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import {
-  MapContainer,
-  ImageOverlay,
-  useMapEvents,
-  Popup,
-  useMap,
-} from "react-leaflet";
+import React, { useState, useRef } from "react";
+import { MapContainer, ImageOverlay, useMapEvents, Popup } from "react-leaflet";
 import { CRS } from "leaflet";
 import "../App.css";
 import { createPost, deletePost } from "../lib/firebase";
@@ -23,7 +17,7 @@ const EditPage = () => {
     shape: "",
     name: "",
     altname: "",
-    height: "",
+    altitude: "",
     keystoneone: "",
     keystonetwo: "",
     notes: "",
@@ -95,6 +89,15 @@ const EditPage = () => {
       .then(() => {
         // Update the isLoading state and navigate to the home page.
         console.log("Pin added!");
+        setFormValues({
+          ...formValues,
+          name: "",
+          altname: "",
+          altitude: "",
+          keystoneone: "",
+          keystonetwo: "",
+          notes: "",
+        });
       })
       .catch((err) => {
         // Alert the error and update the isLoading state.
@@ -176,23 +179,24 @@ const EditPage = () => {
             className="pinInput"
           ></input>
           <input
-            id="height"
-            htmlFor="height"
+            id="altitude"
+            htmlFor="altitude"
             type="text"
             placeholder="Wysokość"
             onChange={valueChangeHandler}
-            value={formValues.height}
+            value={formValues.altitude}
             className="pinInput"
           ></input>
-          <input
+          <textarea
             id="notes"
+            rows="10"
             htmlFor="notes"
             type="textarea"
             placeholder="Notatki"
             onChange={valueChangeHandler}
             value={formValues.notes}
-            className="pinInput"
-          ></input>
+            // className="pinInput"
+          ></textarea>
           {formValues.shape == "cross.svg" && (
             <input
               id="keystoneone"
@@ -215,15 +219,7 @@ const EditPage = () => {
               className="pinInput"
             ></input>
           )}
-          <img
-            ref={shapePreview}
-            className="pinShapePreview"
-            src={
-              formValues.shape.length > 0
-                ? `/${formValues.shape}`
-                : "/thinking.svg"
-            }
-          ></img>
+
           <button type="submit">Dodaj znacznik</button>
           <p className="shapeText">Wybierz kształt:</p>
         </form>
@@ -249,6 +245,18 @@ const EditPage = () => {
             onClick={shapeHandler}
           ></img>
         </div>
+        <div className="shapePreviewContainer">
+          <p className="shapeText">Wybrany kształt:</p>
+          <img
+            ref={shapePreview}
+            className="pinShapePreview"
+            src={
+              formValues.shape.length > 0
+                ? `/${formValues.shape}`
+                : "/thinking.svg"
+            }
+          ></img>
+        </div>
       </div>
 
       <MapContainer
@@ -265,6 +273,7 @@ const EditPage = () => {
           ref={placeholderPin}
           bounds={faraway}
           url="./circle.svg"
+          className="placeholderPin"
         ></ImageOverlay>
         <Pins />
         {displayPins}

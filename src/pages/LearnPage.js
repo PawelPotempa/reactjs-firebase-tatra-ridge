@@ -43,7 +43,7 @@ const LearnPage = () => {
           </a>
           <h1>{d.name}</h1>
           {d.altname.length > 0 && <h2>{d.altname}</h2>}
-          {d.height.length > 0 && <h2>{d.height}</h2>}
+          {d.altitude.length > 0 && <h2>{d.altitude}</h2>}
           {d.keystoneone.length > 0 && <p>{d.keystoneone}</p>}
           {d.keystonetwo.length > 0 && <p>{d.keystonetwo}</p>}
           <p>{d.notes}</p>
