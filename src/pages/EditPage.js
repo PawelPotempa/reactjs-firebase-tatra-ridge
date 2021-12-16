@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { MapContainer, ImageOverlay, useMapEvents, Popup } from "react-leaflet";
-import { CRS } from "leaflet";
+import { circle, CRS } from "leaflet";
 import "../App.css";
 import { createPost, deletePost } from "../lib/firebase";
 import useDataFetch from "../hooks/useDataFetch";
@@ -14,7 +14,7 @@ const EditPage = () => {
   const [formValues, setFormValues] = useState({
     latitude: "",
     longitude: "",
-    shape: "",
+    shape: "./circle.svg",
     name: "",
     altname: "",
     altitude: "",
@@ -77,6 +77,7 @@ const EditPage = () => {
       ...formValues,
       shape: res[3],
     });
+    console.log(formValues);
     placeholderPin.current._image.src = `./${res[3]}`;
   };
   // Function responsible for handling the form submition.
@@ -116,7 +117,7 @@ const EditPage = () => {
           [d.latitude + 1.4, d.longitude + 1.4],
         ]}
         interactive={true}
-        url={`./${d.shape}`}
+        url={d.shape}
       >
         <Popup>
           <button
@@ -223,15 +224,15 @@ const EditPage = () => {
           <button type="submit">Dodaj znacznik</button>
           <p className="shapeText">Wybierz kształt:</p>
         </form>
-        <div class="shapesContainer">
+        <div className="shapesContainer">
           <img
             className="pinShape"
-            src="/square.svg"
+            src="/circle.svg"
             onClick={shapeHandler}
           ></img>
           <img
             className="pinShape"
-            src="/circle.svg"
+            src="/square.svg"
             onClick={shapeHandler}
           ></img>
           <img
@@ -253,7 +254,7 @@ const EditPage = () => {
             src={
               formValues.shape.length > 0
                 ? `/${formValues.shape}`
-                : "/thinking.svg"
+                : "/circle.svg"
             }
           ></img>
         </div>
