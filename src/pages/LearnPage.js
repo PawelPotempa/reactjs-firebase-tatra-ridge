@@ -57,6 +57,7 @@ const LearnPage = () => {
       <Navbar />
       <MapContainer
         maxBounds={bounds}
+        preferCanvas="true"
         maxBoundsViscosity={1.0}
         className="mapContainer"
         center={position}
