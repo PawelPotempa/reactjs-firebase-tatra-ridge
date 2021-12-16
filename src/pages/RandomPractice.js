@@ -111,6 +111,7 @@ const EditPage = () => {
       <Navbar />
       <MapContainer
         maxBounds={bounds}
+        doubleClickZoom={false}
         maxBoundsViscosity={1.0}
         className="mapContainer"
         center={position}
