@@ -7,6 +7,7 @@ import RandomPractice from "./pages/RandomPractice";
 import LoginPage from "./pages/LoginPage";
 import { AuthProvider } from "../src/contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import GlobalStyle from "./globalStyles";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route exact path="/random-practice" element={<RandomPractice />} />
           <Route exact path="/signin" element={<LoginPage />} />
         </Routes>
+        <GlobalStyle />
       </AuthProvider>
     </>
   );

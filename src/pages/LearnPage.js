@@ -39,6 +39,7 @@ const LearnPage = () => {
   const displayPins = doc.map((d) => {
     return (
       <ImageOverlay
+        className="img-overlay"
         alt={d.name}
         key={d.id}
         bounds={[

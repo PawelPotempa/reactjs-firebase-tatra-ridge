@@ -1,25 +1,25 @@
 import React from "react";
-import "./Navbar.css";
+import { Nav, List, ListItem } from "./navbarElements";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav id="navbar">
-      <ul>
-        <li>
+    <Nav>
+      <List>
+        <ListItem>
           <Link to="/edit">Edit</Link>
-        </li>
-        <li>
+        </ListItem>
+        <ListItem>
           <Link to="/">Learn</Link>
-        </li>
-        <li>
+        </ListItem>
+        <ListItem>
           <Link to="/practice">Practice</Link>
-        </li>
-        <li>
+        </ListItem>
+        <ListItem>
           <Link to="/random-practice">Practice Game</Link>
-        </li>
-      </ul>
-    </nav>
+        </ListItem>
+      </List>
+    </Nav>
   );
 };
 
