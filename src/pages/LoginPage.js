@@ -1,11 +1,9 @@
 import {
   Container,
   FormWrap,
-  Icon,
   FormContent,
   Form,
   FormH1,
-  FormLabel,
   FormInput,
   FormButton,
   FormText,

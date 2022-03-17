@@ -1,10 +1,27 @@
 import React from "react";
 import { MapContainer, ImageOverlay, Popup } from "react-leaflet";
 import { CRS } from "leaflet";
-import "../App.css";
+import styled from "styled-components";
 import { deletePost } from "../lib/firebase";
 import useDataFetch from "../hooks/useDataFetch";
 import Navbar from "../components/Navbar";
+
+const DeleteButton = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 4px 0 4px 0;
+  border: none;
+  text-align: center;
+  width: 18px;
+  height: 14px;
+  font: 16px/14px Tahoma, Verdana, sans-serif;
+  color: #c3c3c3;
+  text-decoration: none;
+  font-weight: bold;
+  background: transparent;
+  cursor: pointer;
+`;
 
 const LearnPage = () => {
   const { doc } = useDataFetch();
@@ -22,7 +39,6 @@ const LearnPage = () => {
   const displayPins = doc.map((d) => {
     return (
       <ImageOverlay
-        className="img-overlay"
         alt={d.name}
         key={d.id}
         bounds={[
@@ -33,14 +49,13 @@ const LearnPage = () => {
         url={`./${d.shape}`}
       >
         <Popup>
-          <a
-            className="deleteButton"
+          <DeleteButton
             onClick={() => {
               deletePost(d.id);
             }}
           >
             o
-          </a>
+          </DeleteButton>
           <h1>{d.name}</h1>
           {d.altname.length > 0 && <h2>{d.altname}</h2>}
           {d.altitude.length > 0 && <h2>{d.altitude}</h2>}

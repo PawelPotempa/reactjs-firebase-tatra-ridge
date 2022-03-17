@@ -1,10 +1,29 @@
 import React, { useState, useRef } from "react";
 import { MapContainer, ImageOverlay, useMapEvents, Popup } from "react-leaflet";
 import { CRS } from "leaflet";
-import "../App.css";
+import styled from "styled-components";
 import { createPost, deletePost } from "../lib/firebase";
 import useDataFetch from "../hooks/useDataFetch";
 import Navbar from "../components/Navbar";
+
+const Input = styled.input``;
+const Button = styled.button``;
+const DeleteButton = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 4px 0 4px 0;
+  border: none;
+  text-align: center;
+  width: 18px;
+  height: 14px;
+  font: 16px/14px Tahoma, Verdana, sans-serif;
+  color: #c3c3c3;
+  text-decoration: none;
+  font-weight: bold;
+  background: transparent;
+  cursor: pointer;
+`;
 
 const EditPage = () => {
   const { doc } = useDataFetch();
@@ -80,27 +99,26 @@ const EditPage = () => {
         url={`./${randomEl.shape}`}
       >
         <Popup>
-          <input
+          <Input
             type="text"
             data-tag={randomEl.name}
             onChange={valueCompare}
-          ></input>
-          {/* {answer ? <p>{randomEl.name}</p> : null} */}
-          <button
+          ></Input>
+          <Button
             onClick={() => {
               setAnswer((prevAnswer) => !prevAnswer);
             }}
           >
             Następny!
-          </button>
-          <a
+          </Button>
+          <DeleteButton
             className="deleteButton"
             onClick={() => {
               deletePost(randomEl.id);
             }}
           >
             o
-          </a>
+          </DeleteButton>
         </Popup>
       </ImageOverlay>
     );

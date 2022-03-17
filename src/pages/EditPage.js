@@ -1,10 +1,96 @@
 import React, { useState, useRef } from "react";
 import { MapContainer, ImageOverlay, useMapEvents, Popup } from "react-leaflet";
 import { circle, CRS } from "leaflet";
+import styled from "styled-components";
 import "../App.css";
 import { createPost, deletePost } from "../lib/firebase";
 import useDataFetch from "../hooks/useDataFetch";
 import Navbar from "../components/Navbar";
+
+export const Container = styled.div`
+  position: absolute;
+  background: #2e2e2e;
+  -webkit-box-shadow: 5px 8px 16px -7px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 5px 8px 16px -7px rgba(66, 68, 90, 1);
+  box-shadow: 5px 8px 16px -7px rgba(66, 68, 90, 1);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  height: auto;
+  width: 10vw;
+  top: 50%;
+  margin-top: -25vh;
+  padding: 0.7em 0.7em 0.7em 0;
+  z-index: 999;
+`;
+
+const Form = styled.form`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const Input = styled.input`
+  width: 90%;
+  height: 15px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  margin-top: 5px;
+  z-index: 9999;
+
+  :nth-of-type(8) {
+    margin-bottom: 5px;
+  }
+`;
+
+const Textarea = styled.textarea`
+  width: 90%;
+  height: 15px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  margin-top: 5px;
+  z-index: 9999;
+  height: auto;
+  resize: none;
+`;
+
+const ShapeText = styled.p`
+  margin: 10px 0 0 0px;
+  color: #fff;
+  text-align: center;
+`;
+
+const ShapeContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  height: 40px;
+  width: auto;
+  z-index: 999;
+`;
+
+const ShapePreviewContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const ShapePreviewImg = styled.img`
+  width: 20%;
+  padding-bottom: 1em;
+  filter: invert(73%) sepia(81%) saturate(407%) hue-rotate(133deg)
+    brightness(191%) contrast(97%);
+`;
+
+const ShapeImg = styled.img`
+  height: 100%;
+  filter: invert(59%) sepia(69%) saturate(1644%) hue-rotate(2deg)
+    brightness(107%) contrast(103%);
+`;
+
+const Button = styled.button``;
 
 const EditPage = () => {
   const { doc } = useDataFetch();
@@ -120,13 +206,13 @@ const EditPage = () => {
         url={d.shape}
       >
         <Popup>
-          <button
+          <Button
             onClick={() => {
               deletePost(d.id);
             }}
           >
             Usuń znacznik
-          </button>
+          </Button>
         </Popup>
       </ImageOverlay>
     );
@@ -135,60 +221,57 @@ const EditPage = () => {
   return (
     <>
       <Navbar />
-      <div class="formContainer">
-        <form onSubmit={submitHandler}>
-          <input
+      <Container>
+        <Form onSubmit={submitHandler}>
+          <Input
             id="latitude"
             htmlFor="latitude"
             type="text"
             value={formValues.latitude}
             onChange={valueChangeHandler}
-            className="pinInput hidden"
-          ></input>
-          <input
+            className="hidden"
+          ></Input>
+          <Input
             id="longitude"
             htmlFor="longitude"
             type="text"
             value={formValues.longitude}
             onChange={valueChangeHandler}
-            className="pinInput hidden"
-          ></input>
-          <input
+            className="hidden"
+          ></Input>
+          <Input
             id="shape"
             htmlFor="shape"
             type="text"
             value={formValues.shape}
             onChange={valueChangeHandler}
-            className="pinInput hidden"
-          ></input>
-          <input
+            className="hidden"
+          ></Input>
+          <Input
             id="name"
             htmlFor="name"
             type="text"
             placeholder="Nazwa"
             onChange={valueChangeHandler}
             value={formValues.name}
-            className="pinInput"
-          ></input>
-          <input
+          ></Input>
+          <Input
             id="altname"
             htmlFor="altname"
             type="text"
             placeholder="Nazwa Alternatywna"
             onChange={valueChangeHandler}
             value={formValues.altname}
-            className="pinInput"
-          ></input>
-          <input
+          ></Input>
+          <Input
             id="altitude"
             htmlFor="altitude"
             type="text"
             placeholder="Wysokość"
             onChange={valueChangeHandler}
             value={formValues.altitude}
-            className="pinInput"
-          ></input>
-          <textarea
+          ></Input>
+          <Textarea
             id="notes"
             rows="10"
             htmlFor="notes"
@@ -196,59 +279,40 @@ const EditPage = () => {
             placeholder="Notatki"
             onChange={valueChangeHandler}
             value={formValues.notes}
-            // className="pinInput"
-          ></textarea>
+          ></Textarea>
           {formValues.shape == "cross.svg" && (
-            <input
+            <Input
               id="keystoneone"
               htmlFor="keystoneone"
               type="text"
               placeholder="Zwornik"
               value={formValues.keystoneone}
               onChange={valueChangeHandler}
-              className="pinInput"
-            ></input>
+            ></Input>
           )}
-          {formValues.shape == "cross.svg" && (
-            <input
+          {formValues.shape === "cross.svg" && (
+            <Input
               id="keystonetwo"
               htmlFor="keystonetwo"
               type="text"
               placeholder="Zwornik"
               value={formValues.keystonetwo}
               onChange={valueChangeHandler}
-              className="pinInput"
-            ></input>
+            ></Input>
           )}
 
-          <button type="submit">Dodaj znacznik</button>
-          <p className="shapeText">Wybierz kształt:</p>
-        </form>
-        <div className="shapesContainer">
-          <img
-            className="pinShape"
-            src="/circle.svg"
-            onClick={shapeHandler}
-          ></img>
-          <img
-            className="pinShape"
-            src="/square.svg"
-            onClick={shapeHandler}
-          ></img>
-          <img
-            className="pinShape"
-            src="/hexagon.svg"
-            onClick={shapeHandler}
-          ></img>
-          <img
-            className="pinShape"
-            src="/cross.svg"
-            onClick={shapeHandler}
-          ></img>
-        </div>
-        <div className="shapePreviewContainer">
-          <p className="shapeText">Wybrany kształt:</p>
-          <img
+          <Button type="submit">Dodaj znacznik</Button>
+          <ShapeText className="shapeText">Wybierz kształt:</ShapeText>
+        </Form>
+        <ShapeContainer>
+          <ShapeImg src="/circle.svg" onClick={shapeHandler}></ShapeImg>
+          <ShapeImg src="/square.svg" onClick={shapeHandler}></ShapeImg>
+          <ShapeImg src="/hexagon.svg" onClick={shapeHandler}></ShapeImg>
+          <ShapeImg src="/cross.svg" onClick={shapeHandler}></ShapeImg>
+        </ShapeContainer>
+        <ShapePreviewContainer className="shapePreviewContainer">
+          <ShapeText className="shapeText">Wybrany kształt:</ShapeText>
+          <ShapePreviewImg
             ref={shapePreview}
             className="pinShapePreview"
             src={
@@ -256,9 +320,9 @@ const EditPage = () => {
                 ? `/${formValues.shape}`
                 : "/circle.svg"
             }
-          ></img>
-        </div>
-      </div>
+          ></ShapePreviewImg>
+        </ShapePreviewContainer>
+      </Container>
 
       <MapContainer
         maxBounds={bounds}
