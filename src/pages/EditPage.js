@@ -16,7 +16,7 @@ export const Container = styled.div`
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   height: auto;
-  width: 10vw;
+  width: 30%;
   top: 50%;
   margin-top: -25vh;
   padding: 0.7em 0.7em 0.7em 0;
@@ -65,7 +65,7 @@ const ShapeContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 20px;
-  height: 40px;
+  height: 30px;
   width: auto;
   z-index: 999;
 `;

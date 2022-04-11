@@ -1,11 +1,26 @@
-import React from "react";
-import { Nav, List, ListItem } from "./navbarElements";
+import React, { useState } from "react";
+import {
+  MobileIcon,
+  Nav,
+  List,
+  ListItem,
+  IconContainer,
+} from "./navbarElements";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const [active, setActive] = useState(false);
+
   return (
     <Nav>
-      <List>
+      <IconContainer
+        onClick={() => {
+          setActive(!active);
+        }}
+      >
+        <MobileIcon />
+      </IconContainer>
+      <List active={active}>
         <ListItem>
           <Link to="/edit">Edit</Link>
         </ListItem>
