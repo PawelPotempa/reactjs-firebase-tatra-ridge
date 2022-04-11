@@ -17,8 +17,9 @@ export const Container = styled.div`
   border-bottom-right-radius: 10px;
   height: auto;
   width: 30%;
+  max-width: 20rem;
   top: 50%;
-  margin-top: -25vh;
+  margin-top: -23vh;
   padding: 0.7em 0.7em 0.7em 0;
   z-index: 999;
 `;

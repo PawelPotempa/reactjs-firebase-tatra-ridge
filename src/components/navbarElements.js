@@ -38,7 +38,6 @@ export const List = styled.ul`
   width: 100%;
   @media screen and (max-width: 768px) {
     display: ${(props) => (props.active === true ? "flex" : "none")};
-
     flex-direction: ${(props) => (props.active === true ? "column" : "row")};
     align-items: ${(props) => (props.active ? "flex-start" : "center")};
     list-style: none;
